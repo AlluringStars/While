@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CycleTaskScreen() {
     var sumResult by remember { mutableStateOf(0.0) }
+    var iterations by remember { mutableStateOf(0) }
 
     val myColor = Color(0xFF9C27B0) // Фиолетовый
 
@@ -35,13 +36,27 @@ fun CycleTaskScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { sumResult = 1.0 }, // Просто выводим 1.0
+            onClick = {
+                var sum = 0.0
+                var n = 1
+                var count = 0
+
+                // Пока просто ограничиваем 10 итерациями для проверки
+                while (count < 10) {
+                    sum += 1.0 / (n * n)
+                    count++
+                    n++
+                }
+                sumResult = sum
+                iterations = count
+            },
             colors = ButtonDefaults.buttonColors(containerColor = myColor)
         ) {
             Text("Вычислить", fontSize = 18.sp, color = Color.White)
         }
         Spacer(modifier = Modifier.height(24.dp))
         Text("Сумма: $sumResult", fontSize = 20.sp, color = myColor)
+        Text("Итераций: $iterations", fontSize = 20.sp, color = myColor)
     }
 }
 
